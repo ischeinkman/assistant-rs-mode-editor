@@ -1,12 +1,28 @@
 
+/** @typedef {Object} ParentData 
+ * @property {number} level 
+ * @property {string |undefined} parent
+ */
+
+/** @type {Object.<string, ParentData>} */
 var parentdata = {}
 
+/**
+ * @typedef {import('./modeldata').Mode} Mode
+ */
+
+/**
+ * @param {import('vis-data/peer').DataSet<Mode, "name">} modeldata 
+ */
 export function make_parentdata(modeldata) {
     let raw = modeldata.get();
+
+    /** @type Object.<string, Mode>*/
     let mapped = raw.reduce(function (acc, cur) {
         acc[cur.name] = cur;
         return acc;
     }, {});
+    /** @type string[] */
     var queue = [];
     let root_node = mapped[""];
     parentdata[""] = { level: 0 };
@@ -21,7 +37,6 @@ export function make_parentdata(modeldata) {
         };
         queue.push(nxt);
     });
-    var qdx = 0;
     while (queue.length > 0) {
         let nxt = queue.pop();
         let cur_lvl = parentdata[nxt].level;
@@ -36,13 +51,13 @@ export function make_parentdata(modeldata) {
                 queue.push(child);
             }
         })
-        qdx += 1;
-        if (qdx > 2014) {
-            throw new Error("FUKK");
-        }
     }
 }
 
+/**
+ * @param {string} mode 
+ * @returns {ParentData}
+ */
 export function get_parentdata(mode) {
     return parentdata[mode];
 }
