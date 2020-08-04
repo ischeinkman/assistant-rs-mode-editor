@@ -1,6 +1,4 @@
 import { DataSet, createNewDataPipeFrom } from 'vis-data/peer';
-import { Network } from 'vis-network/peer';
-import { parse_files } from "./loading";
 import { make_parentdata, get_parentdata } from "./parents";
 import { get_nodepos } from "./turtling";
 
@@ -11,20 +9,21 @@ const MODEMASS = 1000;
 const CMD_TERM_MASS = 1;
 const CMD_CONN_MASS = 50;
 const CMD_TERM_OFFSET = { x: 0, y: 0 };
-const CMD_CONN_OFFSET = { x: (ALEN + BLEN) / 2.0, y: (ALEN + BLEN) / 2.0 }
+const CMD_CONN_OFFSET = { x: (ALEN + BLEN) / 2.0, y: (ALEN + BLEN) / 2.0 };
 
 function cb(evt) {
-    init();
-    parse_files(evt.target.files)
+    init_graph()
+        .then(() => import('./loading'))
+        .then(module => module.parse_files(evt.target.files))
         .then((data) => {
             modeldata.add(data);
             modeldata.flush();
-            data
+            data;
         })
         .then(() => {
             graph.stabilize();
             graph.fit();
-        })
+        });
 }
 
 var modeldata = new DataSet({ fieldId: "name", queue: true, });
@@ -46,7 +45,7 @@ var edgepipe = createNewDataPipeFrom(modeldata)
                     from: cmd_nodeid,
                     to: cmd.mode,
                     length: BLEN,
-                })
+                });
             }
         }
         return retvl;
@@ -79,7 +78,7 @@ nodepipe.all().start();
 var data = {
     nodes: nodeview,
     edges: edgeview,
-}
+};
 var options = {
     layout: {
         hierarchical: {
@@ -114,7 +113,7 @@ var options = {
         timestep: 1,
         adaptiveTimestep: true,
     }
-}
+};
 function make_command_node(cmd, mode, idx) {
     let cmdid = make_cmd_nodeid(mode, idx, cmd);
     let lbl = cmd.message.replaceAll(" ", "") || "<DEFAULT>";
@@ -165,20 +164,26 @@ function make_cmd_nodeid(mode, idx, cmd) {
     return mode.name + " -- " + idx;
 }
 var graph;
-function init() {
+function init_graph() {
     if (!graph) {
-        var graphelm = document.getElementById("modegraph");
-        graph = new Network(graphelm, data, options);
-        graph.on("click", function (data) {
-            draw_mode(data);
-        })
-        graph.once("stabilized", function () {
-            graph.fit()
-        })
-        graph.on("dragStart", function () {
-            let viewer = document.getElementById("modeviewer");
-            viewer.style.display = "none";
-        })
+        return import('vis-network/peer')
+            .then(vis => {
+                var graphelm = document.getElementById("modegraph");
+                graph = new vis.Network(graphelm, data, options);
+                graph.on("click", function (data) {
+                    draw_mode(data);
+                });
+                graph.once("stabilized", function () {
+                    graph.fit();
+                });
+                graph.on("dragStart", function () {
+                    let viewer = document.getElementById("modeviewer");
+                    viewer.style.display = "none";
+                });
+            });
+    }
+    else {
+        return Promise.resolve({});
     }
 }
 
@@ -195,7 +200,7 @@ function draw_mode(evt) {
 }
 
 
-document.addEventListener("DOMContentLoaded", mymain)
+document.addEventListener("DOMContentLoaded", mymain);
 
 function mymain() {
     document.getElementById("tomlupload").onchange = cb;
