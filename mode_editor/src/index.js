@@ -1,20 +1,22 @@
 function cb(evt) {
     let modeldata_promise = import('./modeldata')
         .then(mod => mod.getData());
-    init_graph()
-        .then(() => import('./loading'))
-        .then(module => module.parse_files(evt.target.files))
-        .then((data) => modeldata_promise.then(modeldata => {
+    let newdata_promise = import('./loading')
+        .then(module => module.parse_files(evt.target.files));
+    let data_finish_promise = Promise.all([modeldata_promise, newdata_promise])
+        .then(([modeldata, data]) => {
             modeldata.add(data);
             modeldata.flush();
-        }))
-        .then(() => {
+        });
+    data_finish_promise
+        .then(() => init_graph())
+        .then(graph => {
             graph.stabilize();
             graph.fit();
         });
 }
 
-var options = {
+const options = {
     layout: {
         hierarchical: {
             enabled: false,
@@ -50,41 +52,23 @@ var options = {
     }
 };
 
-var graph;
+var graph_promise;
 function init_graph() {
-    if (!graph) {
+    if (!graph_promise) {
         let data_promise = import('./modeldata').then(mod => mod.getGraphData());
-        return import('vis-network/peer').then(vis => data_promise.then(data => {
-            var graphelm = document.getElementById("modegraph");
-            graph = new vis.Network(graphelm, data, options);
-            graph.on("click", function (data) {
-                draw_mode(data);
+        let vis_promise = import('vis-network/peer');
+        graph_promise = Promise.all([vis_promise, data_promise])
+            .then(([vis, data]) => {
+                var graphelm = document.getElementById("modegraph");
+                var graph = new vis.Network(graphelm, data, options);
+                graph.once("stabilized", function () {
+                    graph.fit();
+                });
+                return graph;
             });
-            graph.once("stabilized", function () {
-                graph.fit();
-            });
-            graph.on("dragStart", function () {
-                let viewer = document.getElementById("modeviewer");
-                viewer.style.display = "none";
-            });
-        }));
     }
-    else {
-        return Promise.resolve({});
-    }
+    return graph_promise;
 }
-
-function draw_mode(evt) {
-    if (evt.nodes.length != 1) {
-        return;
-    }
-    let viewer = document.getElementById("modeviewer");
-    viewer.style.display = "";
-    viewer.style.position = "absolute";
-    viewer.style.top = evt.pointer.DOM.y;
-    viewer.style.left = evt.pointer.DOM.x;
-}
-
 
 document.addEventListener("DOMContentLoaded", mymain);
 
