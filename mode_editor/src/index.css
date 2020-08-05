@@ -10,11 +10,6 @@ body {
   height: 100px;
 }
 
-#modegraph {
-  background-color: whitesmoke;
-  flex-grow: 1;
-}
-
 #container {
   display: flex;
   width: 100%;
