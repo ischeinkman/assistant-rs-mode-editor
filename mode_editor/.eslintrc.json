@@ -1,0 +1,41 @@
+{
+    "env": {
+        "browser": true,
+        "es2020": true
+    },
+    "extends": "eslint:recommended",
+    "parserOptions": {
+        "ecmaVersion": 11,
+        "sourceType": "module"
+    },
+    "rules": {
+        "no-extra-boolean-cast": [
+            "off",
+            {
+                "enforceForLogicalOperands": true
+            }
+        ],
+        "no-unused-vars": [
+            "warn"
+        ],
+        "no-extra-parens": [
+            "warn"
+        ],
+        "no-cond-assign": [
+            "error",
+            "always"
+        ],
+        "require-atomic-updates": [
+            "warn"
+        ],
+        "curly": [
+            "warn"
+        ],
+        "eqeqeq": [
+            "warn"
+        ],
+        "no-else-return": [
+            "warn"
+        ]
+    }
+}
