@@ -107,14 +107,14 @@ function make_command_node(cmd, mode, idx) {
     var retvl = {
         id: cmdid,
         label: lbl.charAt(0),
-        color: (is_terminal) ? "lightgreen" : "green",
+        color: is_terminal ? "lightgreen" : "green",
         font: {
             size: 10
         },
         level: lvl + 1,
-        x: mpos.x + ((is_terminal) ? CMD_TERM_OFFSET.x : CMD_CONN_OFFSET.x),
-        y: mpos.y + ((is_terminal) ? CMD_TERM_OFFSET.y : CMD_CONN_OFFSET.y),
-        mass: (is_terminal) ? CMD_TERM_MASS : CMD_CONN_MASS,
+        x: mpos.x + (is_terminal ? CMD_TERM_OFFSET.x : CMD_CONN_OFFSET.x),
+        y: mpos.y + (is_terminal ? CMD_TERM_OFFSET.y : CMD_CONN_OFFSET.y),
+        mass: is_terminal ? CMD_TERM_MASS : CMD_CONN_MASS,
         _data: cmd,
         _parent: mode,
     };
@@ -139,11 +139,11 @@ function make_command_node(cmd, mode, idx) {
 function make_mode_node(mode) {
     let mpos = get_nodepos(mode.name);
     let lvl = 2 * get_parentdata(mode.name).level;
-    let is_root = (!mode.name) || mode.name.length <= 0;
+    let is_root = !mode.name || mode.name.length <= 0;
     var retvl = {
         id: mode.name,
         label: mode.name.charAt(0),
-        color: (is_root) ? "red" : "blue",
+        color: is_root ? "red" : "blue",
         font: {
             size: 16
         },
@@ -168,9 +168,11 @@ function make_mode_node(mode) {
  * @param {Command} cmd 
  * @returns {string}
  */
+/* eslint-disable no-unused-vars */
 function make_cmd_nodeid(mode, idx, cmd) {
     return mode.name + " -- " + idx;
 }
+/* eslint-enable no-unused-vars */
 
 /** @typedef {Object} GraphEdge 
  * @property {string} id 
@@ -193,7 +195,7 @@ function getEdgesView() {
                         retvl.push({
                             from: mode.name,
                             to: cmd_nodeid,
-                            length: (!!cmd.mode) ? ALEN : TERMLEN,
+                            length: !!cmd.mode ? ALEN : TERMLEN,
                         });
                         if (!!cmd.mode) {
                             retvl.push({
