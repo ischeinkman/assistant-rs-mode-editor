@@ -1,0 +1,112 @@
+/** Wrapper styling **/
+.commandEditor {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  border-radius: 15px;
+
+  background-color: white;
+
+  font-size: 16px;
+  color: black;
+}
+
+/** Field table entries **/
+.commandEditor .fieldRow {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+
+  text-align: center;
+  flex-grow: 1;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+}
+
+.commandEditor .fieldRow .fieldLabel {
+  text-align: center;
+  justify-self: center;
+  align-self: center;
+  height: min-content;
+}
+
+.commandEditor .fieldRow .fieldEditor {
+  align-self: center;
+  align-items: right;
+  justify-items: center;
+  flex-grow: 1;
+  max-width: 70%;
+  max-height: min-content;
+}
+
+.commandEditor .fieldRow .fieldEditor input {
+  width: 100%;
+  font-size: 16px;
+}
+
+/** Push down the top row **/
+.commandEditor .messageRow {
+  margin-top: 10px;
+}
+
+/** Next mode is editting is done via separate list view instead of raw input text;
+therefore, it needs some extra custom stylings **/
+.commandEditor .modeEditor {
+  display: flex;
+  flex-direction: row;
+}
+
+.commandEditor .modeEditor .modeLabel {
+  flex-grow: 1;
+  align-self: center;
+}
+
+.commandEditor .modeEditor .modeChangeButton {
+  align-self: center;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+/** Save/Cancel buttons **/
+.commandEditor .finishRow {
+  margin-bottom: 10px;
+
+  flex-grow: 2;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-content: center;
+}
+
+.commandEditor .finishButton {
+  font-size: 22px;
+  height: fit-content;
+  align-self: flex-end;
+}
+
+/** These are used by the Save/Cancel buttons and also the mode Edit button. **/
+.commandEditor .divButton {
+  box-shadow: none;
+  text-shadow: none;
+  background-color: white;
+
+  border-style: solid;
+  border-color: black;
+  border-radius: 15px;
+
+  font-family: sans-serif;
+  font-weight: bold;
+
+  height: fit-content;
+}
+.commandEditor .divButton:hover {
+  background-color: rgb(238, 235, 235);
+}
+

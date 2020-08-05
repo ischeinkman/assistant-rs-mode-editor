@@ -1,0 +1,33 @@
+<div class="fieldRow messageRow">
+    <div class="fieldLabel messageLabel">
+        Message:
+    </div>
+    <div class="fieldEditor messageEditor">
+        <input type="text" value="{{this.message}}"></input>
+    </div>
+</div>
+<div class="fieldRow execRow">
+    <div class="fieldLabel execLabel">
+        Command:
+    </div>
+    <div class="fieldEditor execEditor">
+        <input type="text" value="{{this.command}}"></input>
+    </div>
+</div>
+<div class="fieldRow modeRow">
+    <div class="fieldLabel modeLabel">
+        Next Mode:
+    </div>
+    <div class="fieldEditor modeEditor">
+        <div class="modeLabel">
+            {{this.mode}}
+        </div>
+        <button class="modeChangeButton divButton">
+            Edit
+        </button>
+    </div>
+</div>
+<div class="finishRow">
+    <button class="divButton finishButton saveButton">Save</button>
+    <button class="divButton finishButton cancelButton">Cancel</button>
+</div>
