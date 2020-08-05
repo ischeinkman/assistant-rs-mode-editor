@@ -64,7 +64,7 @@ function make_mode_nodes(mode) {
 }
 
 
-/** @type {Promise<import('vis-data/peer').DataSet>} */
+/** @type {Promise<import('vis-data/peer').DataSet<GraphNode, "id">>} */
 var nodes_view;
 function getNodesView() {
     if (!nodes_view) {

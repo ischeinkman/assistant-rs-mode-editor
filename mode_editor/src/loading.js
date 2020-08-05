@@ -1,4 +1,10 @@
 
+
+/**
+ * 
+ * @param {File} file 
+ * @returns {Promise<string>}
+ */
 function read_file(file) {
     let freader = new FileReader();
     return new Promise(function (resolve, reject) {
@@ -14,6 +20,12 @@ function read_file(file) {
         freader.readAsText(file);
     });
 }
+
+/**
+ * 
+ * @param {File[]} fls 
+ * @returns {import('./modeldata').Mode[]}
+ */
 export function parse_files(fls) {
     return import('@iarna/toml')
         .then(function(TOML) {

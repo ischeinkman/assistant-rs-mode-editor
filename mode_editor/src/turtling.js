@@ -3,8 +3,15 @@ import {get_parentdata} from './parents'
 const STEP = 800;
 const SPREAD = Math.PI / 4.0;
 
+/**
+ * @type {Object.<string, number>}
+ */
 var posangle_data = { "": Math.PI / 2.0 };
 
+/**
+ * @param {string} node 
+ * @returns {number}
+ */
 function get_posangle(node) {
     if (posangle_data[node] === undefined) {
         let parent_angle = get_posangle(get_parentdata(node).parent);
@@ -13,7 +20,15 @@ function get_posangle(node) {
     }
     return posangle_data[node];
 }
+/** @typedef {Object} Positon 
+ * @property {number} x
+ * @property {number} y
+ */
 
+ /**
+  * @param {string} node 
+  * @returns {Position}
+  */
 export function get_nodepos(node) {
     let R = STEP;
     let this_angle = get_posangle(node);
