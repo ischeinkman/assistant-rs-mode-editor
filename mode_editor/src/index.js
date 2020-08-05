@@ -1,3 +1,5 @@
+import './index.css';
+
 function cb(evt) {
     let modeldata_promise = import('./modeldata')
         .then(mod => mod.getData());
