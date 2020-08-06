@@ -1,5 +1,5 @@
 /** Wrapper styling **/
-.commandEditor {
+.commandEditorView {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -13,7 +13,7 @@
 }
 
 /** Field table entries **/
-.commandEditor .fieldRow {
+.commandEditorView .fieldRow {
   margin-left: 10px;
   margin-right: 10px;
   margin-bottom: 10px;
@@ -27,14 +27,14 @@
   align-content: center;
 }
 
-.commandEditor .fieldRow .fieldLabel {
+.commandEditorView .fieldRow .fieldLabel {
   text-align: center;
   justify-self: center;
   align-self: center;
   height: min-content;
 }
 
-.commandEditor .fieldRow .fieldEditor {
+.commandEditorView .fieldRow .fieldEditor {
   align-self: center;
   align-items: right;
   justify-items: center;
@@ -43,29 +43,29 @@
   max-height: min-content;
 }
 
-.commandEditor .fieldRow .fieldEditor input {
+.commandEditorView .fieldRow .fieldEditor input {
   width: 100%;
   font-size: 16px;
 }
 
 /** Push down the top row **/
-.commandEditor .messageRow {
+.commandEditorView .messageRow {
   margin-top: 10px;
 }
 
 /** Next mode is editting is done via separate list view instead of raw input text;
 therefore, it needs some extra custom stylings **/
-.commandEditor .modeEditor {
+.commandEditorView .modeEditor {
   display: flex;
   flex-direction: row;
 }
 
-.commandEditor .modeEditor .modeLabel {
+.commandEditorView .modeEditor .modeLabel {
   flex-grow: 1;
   align-self: center;
 }
 
-.commandEditor .modeEditor .modeChangeButton {
+.commandEditorView .modeEditor .modeChangeButton {
   align-self: center;
   padding-left: 10px;
   padding-right: 10px;
@@ -74,7 +74,7 @@ therefore, it needs some extra custom stylings **/
 }
 
 /** Save/Cancel buttons **/
-.commandEditor .finishRow {
+.commandEditorView .finishRow {
   margin-bottom: 10px;
 
   flex-grow: 2;
@@ -85,14 +85,14 @@ therefore, it needs some extra custom stylings **/
   align-content: center;
 }
 
-.commandEditor .finishButton {
+.commandEditorView .finishButton {
   font-size: 22px;
   height: fit-content;
   align-self: flex-end;
 }
 
 /** These are used by the Save/Cancel buttons and also the mode Edit button. **/
-.commandEditor .divButton {
+.commandEditorView .divButton {
   box-shadow: none;
   text-shadow: none;
   background-color: white;
@@ -106,7 +106,7 @@ therefore, it needs some extra custom stylings **/
 
   height: fit-content;
 }
-.commandEditor .divButton:hover {
+.commandEditorView .divButton:hover {
   background-color: rgb(238, 235, 235);
 }
 

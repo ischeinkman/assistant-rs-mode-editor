@@ -2,7 +2,7 @@ import template from './command_editor.handlebars';
 import './command_editor.css';
 
 /** 
- * @typedef {import('./modeldata').Command} Command
+ * @typedef {import('../../modeldata').Command} Command
  * 
  */
 
@@ -15,7 +15,7 @@ import './command_editor.css';
  */
 export function makeEditor(parentMode, cmd, onsave, oncancel, oneditmode) {
     var elm = document.createElement('div');
-    elm.classList.add('commandEditor');
+    elm.classList.add('commandEditorView');
     elm.innerHTML = template(cmd);
     elm.addEventListener("change", () => {
         onsave(parentMode, cmd);
