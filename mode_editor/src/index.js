@@ -1,5 +1,5 @@
 import './index.css';
-import {getGraph} from './modetree';
+import { getGraph } from './modetree';
 
 function cb(evt) {
     let modeldata_promise = import('./modeldata')
@@ -17,9 +17,7 @@ function cb(evt) {
             document.getElementById('container').appendChild(dt.element);
             dt.graph.fit();
             dt.graph.stabilize();
-            console.log("FIN");
-            window.MMM = dt;
-        })
+        });
 }
 
 document.addEventListener("DOMContentLoaded", mymain);
