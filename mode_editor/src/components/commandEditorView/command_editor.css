@@ -10,6 +10,8 @@
 
   font-size: 16px;
   color: black;
+
+  height: 100%;
 }
 
 /** Field table entries **/
@@ -75,7 +77,7 @@ therefore, it needs some extra custom stylings **/
 
 /** Save/Cancel buttons **/
 .commandEditorView .finishRow {
-  margin-bottom: 10px;
+  margin-bottom: 30px;
 
   flex-grow: 2;
 
