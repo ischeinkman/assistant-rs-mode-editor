@@ -10,20 +10,18 @@
  * @property {Command[]} command
  */
 
-const vis_import = import('vis-data/peer');
-
-/** @type {Promise< import('vis-data/peer').DataSet<Mode, "name">> } */
 var data_promise;
-/** @type { import('vis-data/peer').DataSet<Mode, "name"> } */
-var data;
+/** @returns {Promise< import('vis-data/peer').DataSet<Mode, "name">> } */
 export function getData() {
     if (!data_promise) {
-        data_promise = vis_import.then(vis => new vis.DataSet({ fieldId: "name", queue: true, }))
-            .then(dt => {
-                data = dt;
-                return data;
-            });
+        data_promise = getDataInner();
     }
     return data_promise;
 }
 
+
+/** @returns {Promise< import('vis-data/peer').DataSet<Mode, "name">> } */
+async function getDataInner() {
+    const vis = await import('vis-data/peer');
+    return new vis.DataSet({ fieldId: "name", queue: true });
+}
