@@ -4,12 +4,6 @@ body {
   background-color: red;
 }
 
-#modeviewer {
-  background-color: magenta;
-  width: 100px;
-  height: 100px;
-}
-
 #container {
   display: flex;
   width: 100%;
@@ -19,8 +13,4 @@ body {
 
 nav {
   flex-basis: 1;
-}
-
-.edgenode {
-  position: absolute;
 }
