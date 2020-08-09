@@ -20,7 +20,15 @@
     </div>
     <div class="fieldEditor modeEditor">
         <div class="modeLabel">
+            {{#if this.mode.length includeZero=false}}
             {{this.mode}}
+            {{else}}
+            {{#if this.mode.length includeZero=true}}
+            [DEFAULT]
+            {{else}}
+            [END]
+            {{/if}}
+            {{/if}}
         </div>
         <button class="modeChangeButton divButton">
             Edit
