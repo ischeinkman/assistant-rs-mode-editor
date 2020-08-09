@@ -1,5 +1,4 @@
 import './index.css';
-import { getGraph } from './modetree';
 
 function cb(evt) {
     let modeldata_promise = import('./modeldata')
@@ -10,13 +9,15 @@ function cb(evt) {
         .then(([modeldata, data]) => {
             modeldata.add(data);
             modeldata.flush();
+            return modeldata;
         });
     data_finish_promise
-        .then(() => getGraph())
-        .then(dt => {
-            document.getElementById('container').appendChild(dt.element);
-            dt.graph.fit();
-            dt.graph.stabilize();
+        .then(async data => {
+            let mode_editor = await import('./components/modeEditorView/mode_editor');
+            let root_mode = data.get("");
+            let mode_view = mode_editor.makeEditor(root_mode);
+            let root_elm = document.getElementById('container');
+            root_elm.appendChild(mode_view.elm);
         });
 }
 
@@ -25,3 +26,4 @@ document.addEventListener("DOMContentLoaded", mymain);
 function mymain() {
     document.getElementById("tomlupload").onchange = cb;
 }
+
