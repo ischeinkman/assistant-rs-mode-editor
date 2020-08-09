@@ -86,7 +86,7 @@ therefore, it needs some extra custom stylings **/
 }
 
 .commandEditorView .finishButton {
-  font-size: 22px;
+  font-size: 20px;
   height: fit-content;
   align-self: flex-end;
 }
