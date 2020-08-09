@@ -9,31 +9,106 @@ import './command_editor.css';
 /**
  * @param {string} parentMode
  * @param {Command} cmd 
- * @param {Function} onsave
- * @param {Function} oncancel
- * @param {Function} oneditmode
+ * @param {number} idx
+ * @returns CommandEditorView
  */
-export function makeEditor(parentMode, cmd, onsave, oncancel, oneditmode) {
-    var elm = document.createElement('div');
-    elm.classList.add('commandEditorView');
-    elm.innerHTML = template(cmd);
-    elm.addEventListener("change", () => {
-        onsave(parentMode, cmd);
-    });
-    elm.addEventListener("keypress", (evt) => {
-        if (evt.key === "Enter") {
-            onsave(parentMode, cmd);
-        }
-    });
-    elm.getElementsByClassName('messageEditor')[0].oninput = (evt) => {
-        cmd.message = evt.target.value;
-    };
-    elm.getElementsByClassName('execEditor')[0].oninput = (evt) => {
-        cmd.command = evt.target.value;
-    };
-    elm.getElementsByClassName('saveButton')[0].onclick = () => onsave(parentMode, cmd);
-    elm.getElementsByClassName('cancelButton')[0].onclick = () => oncancel(parentMode, cmd);
-    elm.getElementsByClassName('modeChangeButton')[0].onclick = () => oneditmode(parentMode, cmd);
-    return elm;
+export function makeEditor(parentMode, idx, cmd) {
+    return new CommandEditorView(parentMode, idx, cmd);
 }
 
+/**
+ * @callback EditModeCallback
+ * @param {string} modename
+ * @param {number} idx 
+ * @param {Command} cmd 
+ */
+/**
+ * @callback SaveCallback 
+ * @param {string} parentMode 
+ * @param {number} idx 
+ * @param {Command} cmd 
+ * @returns {Promise<void>}
+ */
+
+/**
+ * @callback CancelCallback 
+ * @param {string} parentMode 
+ * @param {number} idx 
+ * @param {Command} cmd 
+ * @returns {Promise<void>}
+ */
+
+
+
+/**
+ * @class CommandEditorView 
+ * @property elm {HTMLElement}
+ * @property parentMode {string}
+ * @property idx {number}
+ * @property cmd {Command}
+ */
+class CommandEditorView {
+    /**
+     * 
+     * @param {string} prtMd 
+     * @param {number} indx 
+     * @param {Command} commd 
+     */
+    constructor(prtMd, indx, commd) {
+        this.parentMode = prtMd;
+        this.idx = indx;
+        this.cmd = JSON.parse(JSON.stringify(commd));
+        this.elm = document.createElement('div');
+        this.elm.classList.add('commandEditorView');
+        this.elm.innerHTML = template(this.cmd);
+
+        /**
+         * @type {SaveCallback}
+         */
+        this.onsave = async function (parentMode, idx, cmd) {
+            console.log('==== CEDIT ONSAVE ====');
+            console.log(JSON.parse(JSON.stringify(arguments)));
+            const mod = await import('../../modeldata');
+            const data = await mod.getData();
+            let previous = data.get(parentMode);
+            console.log(JSON.parse(JSON.stringify(previous)));
+            previous.command[idx] = cmd;
+            console.log(JSON.parse(JSON.stringify(previous)));
+            data.updateOnly(previous);
+            data.flush();
+            console.log('==== CEDIT ONSAVE PARTONEDONE ====');
+        };
+
+        /**
+         * @type {CancelCallback}
+         */
+        this.oncancel = function () {
+            return Promise.resolve({});
+        };
+
+        /**
+         * @type {EditModeCallback }
+         */
+        this.oneditmode = function () {
+            return Promise.resolve({});
+        };
+
+        this.elm.addEventListener("change", () => {
+            this.onsave(this.parentMode, this.idx, this.cmd);
+        });
+        this.elm.addEventListener("keypress", (evt) => {
+            if (evt.key === "Enter") {
+                this.onsave(this.parentMode, this.idx, this.cmd);
+            }
+        });
+        this.elm.getElementsByClassName('messageEditor')[0].oninput = (evt) => {
+            this.cmd.message = evt.target.value;
+        };
+        this.elm.getElementsByClassName('execEditor')[0].oninput = (evt) => {
+            this.cmd.command = evt.target.value;
+        };
+        this.elm.getElementsByClassName('saveButton')[0].onclick = () => this.onsave(this.parentMode, this.idx, this.cmd);
+        this.elm.getElementsByClassName('cancelButton')[0].onclick = () => this.oncancel(this.parentMode, this.idx, this.cmd);
+        this.elm.getElementsByClassName('modeChangeButton')[0].onclick = () => this.oneditmode(this.parentMode, this.idx, this.cmd);
+    }
+}
