@@ -1,0 +1,66 @@
+{{#if name}}
+<h2 class="modeName">{{this.name}}</h2>
+{{else}}
+<h2 class="modeName"> [DEFAULT] </h2>
+{{/if}}
+<table class="commandList">
+    <colgroup>
+        <col class="commandCol messageCol">
+        <col class="commandCol execCol">
+        <col class="commandCol modeCol">
+        <col class="commandEditCol">
+    </colgroup>
+    <thead>
+        <tr>
+            <th align="left" class="messageHeader">
+                <div> Message</div>
+            </th>
+            <th align="center" class="execHeader">
+                <div>
+                    Command
+                </div>
+            </th>
+            <th align="right" class="modeHeader">
+                <div>
+                    Next Mode
+                </div>
+            </th>
+            <th> </th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each this.command}}
+        <tr>
+            <td class="commandCell messageCell">{{this.message}}</td>
+
+            {{#if this.command}}
+            <td align="center" class="commandCell execCell">{{this.command}}</td>
+            {{else}}
+            <td align="center" class="commandCell execCell emptyCell"> - </td>
+            {{/if}}
+
+            {{#if this.mode.length includeZero=false}}
+            <td align="right" class="commandCell modeCell">{{this.mode}}</td>
+            {{else}} {{#if this.mode.length includeZero=true}}
+            <td align="right" class="commandCell modeCell">[DEFAULT]</td>
+            {{else}}
+            <td align="right" class="commandCell modeCell emptyCell"> - </td>
+            {{/if}}
+            {{/if}}
+
+            <td class="commandEditButton">
+                <button class="divButton">Edit</button>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<div class="finishRow">
+    {{#if name}}
+    <button class="divButton finishButton renameButton">Rename</button>
+    {{else}}
+    <button disabled="true" class="divButton finishButton renameButton">Rename</button>
+    {{/if}}
+    <button class="divButton finishButton cancelButton">Cancel</button>
+</div>
