@@ -1,6 +1,29 @@
 import './modetree.css';
 
-const options = {
+/**
+ * @typedef {import('../../modeldata').Command} Command
+ * @typedef {import('../../modeldata').Mode} Mode
+ */
+
+const ALEN = 100;
+const BLEN = 100;
+const TERMLEN = 50;
+const MODEMASS = 1000;
+const CMD_TERM_MASS = 1;
+const CMD_CONN_MASS = 50;
+
+export const other_opts = {
+    ALEN: ALEN,
+    BLEN: BLEN,
+    TERMLEN: TERMLEN,
+    MODEMASS: MODEMASS,
+    CMD_TERM_MASS: CMD_TERM_MASS,
+    CMD_CONN_MASS: CMD_CONN_MASS,
+    CMD_TERM_OFFSET: { x: 0, y: 0 },
+    CMD_CONN_OFFSET: { x: (ALEN + BLEN) / 2.0, y: (ALEN + BLEN) / 2.0 },
+
+};
+export const vis_opts = {
     layout: {
         hierarchical: {
             enabled: false,
@@ -55,7 +78,7 @@ class ModeTreeView {
     constructor(vis, data) {
         let element = document.createElement('div');
         element.classList.add('modegraph');
-        let graph = new vis.Network(element, data, options);
+        let graph = new vis.Network(element, data, vis_opts);
         graph.once("stabilized", function () {
             graph.fit();
         });
@@ -65,7 +88,25 @@ class ModeTreeView {
 }
 
 export async function makeTree() {
-    const data = await import('../../modeldata').then(mod => mod.getGraphData());
+    const nodes = await import('./treenodes').then(mod => mod.getNodesView());
+    const edges = await import('./treeedges').then(mod => mod.getEdgesView());
+    const data = {
+        nodes: nodes,
+        edges: edges,
+    };
     const vis = await import('vis-network/peer');
     return new ModeTreeView(vis, data);
 }
+
+/* eslint-disable no-unused-vars */
+/**
+ * 
+ * @param {Mode} mode 
+ * @param {number} idx 
+ * @param {Command} cmd 
+ * @returns {string}
+ */
+export function make_cmd_nodeid(mode, idx, cmd) {
+    return mode.name + " -- " + idx;
+}
+/* eslint-enable no-unused-vars */
