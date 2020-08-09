@@ -5,26 +5,26 @@
  */
 
 /** @type {Object.<string, ParentData>} */
-var parentdata = {}
+var parentdata = {};
 
 /**
  * @typedef {import('./modeldata').Mode} Mode
+ * @typedef {import('./modeldata').Command} Command
  */
+
+export async function remake_parentdata() {
+    let data = await import('./modeldata').then(mod => mod.getData());
+    make_parentdata(data);
+}
 
 /**
  * @param {import('vis-data/peer').DataSet<Mode, "name">} modeldata 
  */
-export function make_parentdata(modeldata) {
-    let raw = modeldata.get();
+function make_parentdata(modeldata) {
 
-    /** @type Object.<string, Mode>*/
-    let mapped = raw.reduce(function (acc, cur) {
-        acc[cur.name] = cur;
-        return acc;
-    }, {});
     /** @type string[] */
     var queue = [];
-    let root_node = mapped[""];
+    let root_node = modeldata.get("");
     parentdata[""] = { level: 0 };
     let children = root_node.command
         .map(cmd => cmd.mode)
@@ -40,7 +40,7 @@ export function make_parentdata(modeldata) {
     while (queue.length > 0) {
         let nxt = queue.pop();
         let cur_lvl = parentdata[nxt].level;
-        let children = mapped[nxt].command
+        let children = modeldata.get(nxt).command
             .map(cmd => cmd.mode)
             .filter(nxt => nxt !== undefined);
         let relevant = children
@@ -50,7 +50,7 @@ export function make_parentdata(modeldata) {
             if (!queue.includes(child)) {
                 queue.push(child);
             }
-        })
+        });
     }
 }
 
