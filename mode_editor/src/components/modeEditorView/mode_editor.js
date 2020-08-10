@@ -23,6 +23,7 @@ export function makeEditor(mode) {
  * @param {string} modename
  * @param {number} idx 
  * @param {Command} cmd 
+ * @returns {Promise<void>}
  */
 /**
  * @callback RenameCallback 
@@ -61,22 +62,19 @@ class ModeEditorView {
         this.oncancel = function () { return Promise.resolve({}); };
 
         /** @type {EditCommandCallback} */
-        this.oneditcommand = function (modename, idx, cmd) {
-            import('../commandEditorView/command_editor')
-                .then(mod => {
-                    console.log('==== MODE EDITCOMMAND ====');
-                    console.log(arguments);
-                    let newview = mod.makeEditor(modename, idx, cmd);
-                    let make_prev_view = async function (parentMode) {
-                        let data = await import('../../modeldata').then(mod => mod.getData());
-                        let prevView = makeEditor(data.get(parentMode));
-                        newview.elm.replaceWith(prevView.elm);
-                    };
-                    let prevsave = newview.onsave;
-                    newview.onsave = (parentMode, idx, cmd) => prevsave(parentMode, idx, cmd).then(() => make_prev_view(parentMode));
-                    newview.oncancel = make_prev_view;
-                    this.elm.replaceWith(newview.elm);
-                });
+        this.oneditcommand = async function (modename, idx, cmd) {
+            const mod = await import('../commandEditorView/command_editor');
+            console.log('==== MODE EDITCOMMAND ====');
+            console.log(arguments);
+            const prevSelf = this;
+            let newview = mod.makeEditor(modename, idx, cmd);
+            let make_prev_view = async function () {
+                newview.elm.replaceWith(prevSelf.elm);
+            };
+            const prevsave = newview.onsave;
+            newview.onsave = (parentMode, idx, cmd) => prevsave(parentMode, idx, cmd).then(() => make_prev_view());
+            newview.oncancel = make_prev_view;
+            this.elm.replaceWith(newview.elm);
         };
         this.elm = document.createElement('div');
         this.elm.classList.add('modeEditorView');
@@ -87,10 +85,10 @@ class ModeEditorView {
         this.elm.getElementsByClassName('cancelButton')[0].onclick = () => this.oncancel(this.mode);
         var editButtons = this.elm.getElementsByClassName('commandEditButton');
         for (var idx = 0; idx < this.mode.command.length; idx++) {
-            let jdx = idx |0;
+            let jdx = idx | 0;
             let btn = editButtons[idx];
             let cmd = this.mode.command[idx];
-            btn.onclick = () => this.oneditcommand(this.mode.name, jdx , cmd);
+            btn.onclick = () => this.oneditcommand(this.mode.name, jdx, cmd);
         }
     }
 }
