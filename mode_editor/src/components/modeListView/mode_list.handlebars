@@ -1,0 +1,20 @@
+<div class="modeListTable">
+{{#each data}}
+{{#if name}}
+<button class="divButton modeListEntry" style="order:1;" value="{{name}}">
+    {{name}}
+</button>
+{{else}}
+<button class="divButton modeListEntry" style="order:0;" value="{{name}}">
+    [DEFAULT]
+</button>
+{{/if}}
+{{/each}}
+</div>
+
+<div class="finishRow">
+    <button class="divButton finishButton addButton">Add</button>
+    {{#if showCancel}}
+    <button class="divButton finishButton cancelButton">Cancel</button>
+    {{/if}}
+</div>

@@ -13,12 +13,21 @@ function cb(evt) {
         });
     data_finish_promise
         .then(async data => {
+            let mode_list = await import('./components/modeListView/mode_list');
+            let mode_view = mode_list.makeList(data, false);
+            let root_elm = document.getElementById('container');
+            root_elm.appendChild(mode_view.elm);
+        });
+    /*
+    data_finish_promise
+        .then(async data => {
             let mode_editor = await import('./components/modeEditorView/mode_editor');
             let root_mode = data.get("");
             let mode_view = mode_editor.makeEditor(root_mode);
             let root_elm = document.getElementById('container');
             root_elm.appendChild(mode_view.elm);
         });
+        */
 }
 
 document.addEventListener("DOMContentLoaded", mymain);
