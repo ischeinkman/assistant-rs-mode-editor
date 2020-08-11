@@ -96,7 +96,7 @@ class ModeEditorView {
             let jdx = idx | 0;
             let btn = editButtons[idx];
             let cmd = this.mode.command[idx];
-            btn.onclick = () => this.oneditcommand(this.mode.name, jdx, cmd);
+            btn.onclick = () => this.oneditcommand(this.mode.name, jdx, JSON.parse(JSON.stringify(cmd)));
         }
         var addbutton = this.elm.getElementsByClassName('commandAddButton')[0];
         addbutton.onclick = () => this.onaddcommand(this.mode.name, this.mode.command.length);
