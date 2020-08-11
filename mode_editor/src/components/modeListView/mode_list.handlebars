@@ -1,15 +1,19 @@
 <div class="modeListTable">
-{{#each data}}
-{{#if name}}
-<button class="divButton modeListEntry" style="order:1;" value="{{name}}">
-    {{name}}
-</button>
-{{else}}
-<button class="divButton modeListEntry" style="order:0;" value="{{name}}">
-    [DEFAULT]
-</button>
-{{/if}}
-{{/each}}
+    {{#each data}}
+    {{#if name}}
+    <div class="modeListEntryWrapper" style="order:1">
+        <button class="divButton modeListEntry" value="{{name}}">
+            {{name}}
+        </button>
+    </div>
+    {{else}}
+    <div class="modeListEntryWrapper" style="order:0">
+        <button class="divButton modeListEntry" value="{{name}}">
+            [DEFAULT]
+        </button>
+    </div>
+    {{/if}}
+    {{/each}}
 </div>
 
 <div class="finishRow">
