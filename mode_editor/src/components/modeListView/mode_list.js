@@ -36,10 +36,15 @@ class ModeListView {
         };
         this.onadd = () => {
         };
+        this.oncancel = () => {
+        };
         this.elm.onclick = (ev) => {
             const modename = ev.target.getAttribute('value');
             if (!modename && ev.target.classList.contains('addButton')) {
                 this.onadd();
+            }
+            else if (!modename && ev.target.classList.contains('cancelButton')) {
+                this.oncancel();
             }
             else {
                 this.onclick(modename);
