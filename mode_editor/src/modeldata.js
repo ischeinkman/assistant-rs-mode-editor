@@ -70,7 +70,7 @@ export async function loadData(newdata) {
 
 /** @returns {Promise< import('vis-data/peer').DataSet<Mode, "name">> } */
 async function getDataInner() {
-    const vis = await import('vis-data/peer');
+    const vis = await import(/* webpackChunkName: "visdatadep-modeldata-1" */ 'vis-data/peer');
     return new vis.DataSet({ fieldId: "name", queue: true });
 }
 

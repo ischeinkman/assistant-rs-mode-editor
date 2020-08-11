@@ -42,15 +42,14 @@ export function getNodesView() {
 
 /** @returns {Promise<import('vis-data/peer').DataSet<GraphNode, "id">>} */
 async function getNodesViewInner() {
-    const vis = await import('vis-data/peer');
-    const data = await import('../../modeldata').then(mod => mod.getData());
+    const  vis = await import(/* webpackChunkName: "visdatadep-treenodes-1" */ 'vis-data/peer');
+    const data = await import(/* webpackChunkName: "modeldata-treenodes-1"*/ '../../modeldata').then(mod => mod.getData());
     var nv = new vis.DataSet();
     var nodes_pipe = vis.createNewDataPipeFrom(data)
         .flatMap(make_mode_nodes)
         .to(nv);
     nodes_pipe.all().start();
     return nv;
-
 }
 
 /**

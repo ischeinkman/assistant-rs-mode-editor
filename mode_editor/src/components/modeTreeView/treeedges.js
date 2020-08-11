@@ -16,8 +16,8 @@ export function getEdgesView() {
 }
 
 async function getEdgesViewInner() {
-    const vis = await import('vis-data/peer');
-    const data = await import('../../modeldata').then(mod => mod.getData());
+    const vis  = await import(/* webpackChunkName: "visdatadep-treeedges-1" */ 'vis-data/peer');
+    const data = await import(/* webpackChunkName: "modeldata-treeedges-1" */'../../modeldata').then(mod => mod.getData());
     var ev = new vis.DataSet();
     var edges_pipe = vis.createNewDataPipeFrom(data)
         .flatMap(function (mode) {

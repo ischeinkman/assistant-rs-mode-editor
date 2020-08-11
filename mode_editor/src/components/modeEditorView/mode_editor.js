@@ -60,10 +60,10 @@ class ModeEditorView {
 
         /** @type {EditCommandCallback} */
         this.oneditcommand = async function (modename, idx, cmd) {
-            let newview = await import('../commandEditorView/command_editor').then(mod => mod.makeEditor(modename, idx, cmd));
+            let newview = await import(/* webpackChunkName: "commandeditor-modeeditor-1" */'../commandEditorView/command_editor').then(mod => mod.makeEditor(modename, idx, cmd));
             const prevSelf = this;
             newview.onsave = async (parentMode, idx, cmd) => {
-                let changed = await import('../../modeldata').then(mod => mod.setCommand(parentMode, idx, cmd));
+                let changed = await import(/* webpackChunkName: "modeldata-modeeditor-1" */ '../../modeldata').then(mod => mod.setCommand(parentMode, idx, cmd));
                 if (changed) {
                     prevSelf.reloadView();
                 }

@@ -65,7 +65,7 @@ class CommandEditorView {
          * @type {SaveCallback}
          */
         this.onsave = async function (parentMode, idx, cmd) {
-            const mod = await import('../../modeldata');
+            const mod = await import(/* webpackChunkName: "modeldata-commandeditor-1" */ '../../modeldata');
             await mod.setCommand(parentMode, idx, cmd);
         };
 

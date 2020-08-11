@@ -88,13 +88,13 @@ class ModeTreeView {
 }
 
 export async function makeTree() {
-    const nodes = await import('./treenodes').then(mod => mod.getNodesView());
-    const edges = await import('./treeedges').then(mod => mod.getEdgesView());
+    const nodes = await import(/* webpackChunkName: "treenodes-modetree-1" */ './treenodes').then(mod => mod.getNodesView());
+    const edges = await import(/* webpackChunkName: "treeedges-modetree-1" */ './treeedges').then(mod => mod.getEdgesView());
     const data = {
         nodes: nodes,
         edges: edges,
     };
-    const vis = await import('vis-network/peer');
+    const vis = await import(/* webpackChunkName: "visnetworkdep-modetree-1" */ 'vis-network/peer');
     return new ModeTreeView(vis, data);
 }
 

@@ -13,7 +13,7 @@ var parentdata = {};
  */
 
 export async function remake_parentdata() {
-    const datamod = await import('./modeldata');
+    const datamod = await import(/* webpackChunkName: 'modeldata-parents-1' */'./modeldata');
 
     /** @type string[] */
     var queue = [];

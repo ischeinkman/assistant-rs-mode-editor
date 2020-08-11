@@ -25,8 +25,8 @@ class ModeListView {
         this.elm.innerHTML = template({ data: this.modenames, showCancel: showCancel });
 
         this.onclick = async (modename) => {
-            const editorImport = await import('../modeEditorView/mode_editor');
-            let mode = await import('../../modeldata').then(mod => mod.getMode(modename));
+            const editorImport = await import(/* webpackChunkName: "modeeditor-modelist-1" */ '../modeEditorView/mode_editor');
+            let mode = await import(/* webpackChunkName: "modeldata-modelist-1" */ '../../modeldata').then(mod => mod.getMode(modename));
             let view = editorImport.makeEditor(mode);
             const prevSelf = this;
             view.oncancel = () => {
