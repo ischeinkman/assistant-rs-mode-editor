@@ -66,17 +66,12 @@ class CommandEditorView {
          * @type {SaveCallback}
          */
         this.onsave = async function (parentMode, idx, cmd) {
-            console.log('==== CEDIT ONSAVE ====');
-            console.log(JSON.parse(JSON.stringify(arguments)));
             const mod = await import('../../modeldata');
             const data = await mod.getData();
             let previous = data.get(parentMode);
-            console.log(JSON.parse(JSON.stringify(previous)));
             previous.command[idx] = cmd;
-            console.log(JSON.parse(JSON.stringify(previous)));
             data.updateOnly(previous);
             data.flush();
-            console.log('==== CEDIT ONSAVE PARTONEDONE ====');
         };
 
         /**
