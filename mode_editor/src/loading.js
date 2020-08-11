@@ -60,3 +60,10 @@ export async function make_toml_data() {
     const mode = await Promise.all(modepromise);
     return TOML.stringify({command : command, mode : mode});
 }
+
+export async function save_toml() {
+    let content = await make_toml_data();
+    let wrapped = new Blob([content], {type : "text/plain;charset=utf-8"});
+    let downloader = await import(/* webpackChunkName: "filesaverdep-loading-1" */'file-saver');
+    downloader.saveAs(wrapped, "assistant.toml");
+}

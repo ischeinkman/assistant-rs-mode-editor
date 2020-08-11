@@ -7,7 +7,18 @@ async function cb(evt) {
     const [modeldata, data] = await Promise.all([modeldata_promise, newdata_promise]);
     await modeldata.loadData(data);
     const mode_list = await import(/* webpackChunkName: `modellist-index-1` */'./components/modeListView/mode_list');
-    let mode_view = mode_list.makeList((await modeldata.getModeNames()), false);
+    const modenames = await modeldata.getModeNames();
+    let mode_view = mode_list.makeList(modenames, {
+        finishButtons: [
+            { ident: "addButton", text: "Add", onclick: () => { console.log('TODO: add mode.'); } },
+            {
+                ident: "downloadButton", text: "Download", onclick: () => {
+                    import(/* webpackChunkName: 'dataloading-index-2' */ './loading')
+                        .then(mod => mod.save_toml());
+                }
+            }
+        ]
+    });
     let root_elm = document.getElementById('container');
     while (root_elm.hasChildNodes()) {
         root_elm.removeChild(root_elm.firstChild);
