@@ -79,13 +79,29 @@ class CommandEditorView {
         /**
          * @type {EditModeCallback }
          */
-        this.oneditmode = function () {
-            return Promise.resolve({});
+        this.oneditmode = async function () {
+            const mod = await import(/* webpackChunkName: "modeldata-commandeditor-2" */ '../../modeldata');
+            let modenames = await mod.getModeNames();
+            modenames.push('[END]');
+            const viewmod = await import(/* webpackChunkName: "modeview-commandeditor-1 */ "../modeListView/mode_list");
+            let nview = viewmod.makeList(modenames, true);
+            const prevSelf = this;
+            nview.onclick = (modename) => {
+                if(modename === '[END]') {
+                    prevSelf.cmd.mode = undefined;
+                }
+                else {
+                    prevSelf.cmd.mode = modename;
+                }
+                prevSelf.reloadView();
+                nview.elm.replaceWith(prevSelf.elm);
+            };
+            nview.oncancel = () => {
+                nview.elm.replaceWith(prevSelf.elm);
+            };
+            this.elm.replaceWith(nview.elm);
         };
 
-        this.elm.addEventListener("change", () => {
-            this.onsave(this.parentMode, this.idx, this.cmd);
-        });
         this.elm.addEventListener("keypress", (evt) => {
             if (evt.key === "Enter") {
                 this.onsave(this.parentMode, this.idx, this.cmd);
