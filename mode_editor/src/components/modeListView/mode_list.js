@@ -19,8 +19,7 @@ class ModeListView {
      * @param {Mode[]} dt 
      */
     constructor(dt, showCancel) {
-        this.data = dt.map(copyMode);
-
+        this.data = dt;
         this.elm = document.createElement('div');
         this.elm.classList.add('modeListView');
         this.elm.innerHTML = template({ data: this.data, showCancel: showCancel });
@@ -34,10 +33,8 @@ class ModeListView {
                 view.elm.replaceWith(prevSelf.elm);
             };
             this.elm.replaceWith(view.elm);
-            console.log(mode);
         };
         this.onadd = () => {
-            console.log('On add called!');
         };
         this.elm.onclick = (ev) => {
             const modename = ev.target.getAttribute('value');
@@ -49,29 +46,4 @@ class ModeListView {
             }
         };
     }
-}
-
-/**
- * @param {Command} cmd 
- * @returns {Command}
- */
-function copyCommand(cmd) {
-    return {
-        message: cmd.message,
-        command: cmd.command,
-        mode: cmd.mode,
-    };
-}
-
-/**
- * @param {Mode} md 
- * @returns {Mode}
- */
-function copyMode(md) {
-    let ncmds = md.command.map(copyCommand);
-    let nname = md.name + "";
-    return {
-        name: nname,
-        command: ncmds,
-    };
 }
