@@ -65,6 +65,8 @@ class ModeEditorView {
             newview.onsave = async (parentMode, idx, cmd) => {
                 let changed = await import(/* webpackChunkName: "modeldata-modeeditor-1" */ '../../modeldata').then(mod => mod.setCommand(parentMode, idx, cmd));
                 if (changed) {
+                    let nmode = await import(/* webpackChunkName: 'modeldata-modeeditor-2' */ '../../modeldata').then(mod => mod.getMode(prevSelf.mode.name));
+                    prevSelf.mode = nmode;
                     prevSelf.reloadView();
                 }
                 newview.elm.replaceWith(prevSelf.elm);
@@ -74,6 +76,10 @@ class ModeEditorView {
             };
             this.elm.replaceWith(newview.elm);
         };
+
+        this.onaddcommand = async function (modename, idx) {
+            await this.oneditcommand(modename, idx, {message : ""})
+        }
         this.elm = document.createElement('div');
         this.elm.classList.add('modeEditorView');
         this.reloadView();
@@ -92,5 +98,7 @@ class ModeEditorView {
             let cmd = this.mode.command[idx];
             btn.onclick = () => this.oneditcommand(this.mode.name, jdx, cmd);
         }
+        var addbutton = this.elm.getElementsByClassName('commandAddButton')[0];
+        addbutton.onclick = () => this.onaddcommand(this.mode.name, this.mode.command.length);
     }
 }

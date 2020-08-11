@@ -31,7 +31,11 @@
     <tbody>
         {{#each this.command}}
         <tr>
+            {{#if this.message}}
             <td class="commandCell messageCell">{{this.message}}</td>
+            {{else}}
+            <td class="commandCell messageCell">[DEFAULT]</td>
+            {{/if}}
 
             {{#if this.command}}
             <td align="center" class="commandCell execCell">{{this.command}}</td>
@@ -53,6 +57,13 @@
             </td>
         </tr>
         {{/each}}
+        <tr colspan="3" span="3" >
+            <td colspan="2"></td>
+            <td colspan="2" class="commandEditButton commandAddButton">
+                <button class="divButton">Add</button>
+            </td>
+
+        </tr>
     </tbody>
 </table>
 

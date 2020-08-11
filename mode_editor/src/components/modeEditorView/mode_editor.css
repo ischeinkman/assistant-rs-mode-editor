@@ -74,6 +74,14 @@
   justify-content: flex-end;
 }
 
+.modeEditorView .commandAddButton {
+    width : 100%;
+    display: table-cell;
+}
+
+.modeEditorView .commandAddButton  button{
+  width : 100%;
+}
 .modeEditorView .divButton {
   box-shadow: none;
   text-shadow: none;
