@@ -1,10 +1,4 @@
 {
-    
-    "data" :[
-        {"name" : "test3"},
-        {"name" : ""},
-        {"name" : "test"},
-        {"name" : "test2"}
-    ],
-    "showCancel" : true
+  "data": ["test3", "", "test", "test2"],
+  "showCancel": true
 }

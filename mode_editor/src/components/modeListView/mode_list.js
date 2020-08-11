@@ -16,17 +16,17 @@ class ModeListView {
 
     /**
      * 
-     * @param {Mode[]} dt 
+     * @param {string[]} dt 
      */
     constructor(dt, showCancel) {
-        this.data = dt;
+        this.modenames = dt;
         this.elm = document.createElement('div');
         this.elm.classList.add('modeListView');
-        this.elm.innerHTML = template({ data: this.data, showCancel: showCancel });
+        this.elm.innerHTML = template({ data: this.modenames, showCancel: showCancel });
 
         this.onclick = async (modename) => {
             const editorImport = await import('../modeEditorView/mode_editor');
-            let mode = this.data.find(md => md.name === modename);
+            let mode = await import('../../modeldata').then(mod => mod.getMode(modename));
             let view = editorImport.makeEditor(mode);
             const prevSelf = this;
             view.oncancel = () => {

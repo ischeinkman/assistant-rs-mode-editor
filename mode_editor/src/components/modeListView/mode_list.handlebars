@@ -1,14 +1,14 @@
 <div class="modeListTable">
     {{#each data}}
-    {{#if name}}
+    {{#if .}}
     <div class="modeListEntryWrapper" style="order:1">
-        <button class="divButton modeListEntry" value="{{name}}">
-            {{name}}
+        <button class="divButton modeListEntry" value="{{.}}">
+            {{.}}
         </button>
     </div>
     {{else}}
     <div class="modeListEntryWrapper" style="order:0">
-        <button class="divButton modeListEntry" value="{{name}}">
+        <button class="divButton modeListEntry" value="{{.}}">
             [DEFAULT]
         </button>
     </div>

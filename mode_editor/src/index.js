@@ -7,7 +7,7 @@ async function cb(evt) {
     const [modeldata, data] = await Promise.all([modeldata_promise, newdata_promise]);
     await modeldata.loadData(data);
     const mode_list = await import('./components/modeListView/mode_list');
-    let mode_view = mode_list.makeList((await modeldata.getData()).get(), false);
+    let mode_view = mode_list.makeList((await modeldata.getModeNames()), false);
     let root_elm = document.getElementById('container');
     while (root_elm.hasChildNodes()) {
         root_elm.removeChild(root_elm.firstChild);
