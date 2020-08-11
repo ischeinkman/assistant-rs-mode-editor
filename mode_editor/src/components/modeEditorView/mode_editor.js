@@ -60,17 +60,14 @@ class ModeEditorView {
 
         /** @type {EditCommandCallback} */
         this.oneditcommand = async function (modename, idx, cmd) {
-            const mod = await import('../commandEditorView/command_editor');
+            let newview = await import('../commandEditorView/command_editor').then(mod => mod.makeEditor(modename, idx, cmd));
             const prevSelf = this;
-            let newview = mod.makeEditor(modename, idx, cmd);
-            const prevsave = newview.onsave;
             newview.onsave = async (parentMode, idx, cmd) => {
-                let changed = !cmdEqual(prevSelf.mode.command[idx], cmd);
+                let changed = await import('../../modeldata').then(mod => mod.setCommand(parentMode, idx, cmd));
                 if (changed) {
-                    await prevsave(parentMode, idx, cmd);
                     prevSelf.reloadView();
-                    newview.elm.replaceWith(prevSelf.elm);
                 }
+                newview.elm.replaceWith(prevSelf.elm);
             };
             newview.oncancel = () => {
                 newview.elm.replaceWith(prevSelf.elm);
@@ -96,14 +93,4 @@ class ModeEditorView {
             btn.onclick = () => this.oneditcommand(this.mode.name, jdx, cmd);
         }
     }
-}
-
-
-/**
- * @param {Command} cmda 
- * @param {Command} cmdb 
- * @returns {boolean}
- */
-function cmdEqual(cmda, cmdb) {
-    return cmda.mode === cmdb.mode && cmda.message === cmdb.message && cmda.command === cmdb.command;
 }

@@ -57,21 +57,16 @@ class CommandEditorView {
     constructor(prtMd, indx, commd) {
         this.parentMode = prtMd;
         this.idx = indx;
-        this.cmd = JSON.parse(JSON.stringify(commd));
+        this.cmd = commd;
         this.elm = document.createElement('div');
         this.elm.classList.add('commandEditorView');
-        this.elm.innerHTML = template(this.cmd);
 
         /**
          * @type {SaveCallback}
          */
         this.onsave = async function (parentMode, idx, cmd) {
             const mod = await import('../../modeldata');
-            const data = await mod.getData();
-            let previous = data.get(parentMode);
-            previous.command[idx] = cmd;
-            data.updateOnly(previous);
-            data.flush();
+            await mod.setCommand(parentMode, idx, cmd);
         };
 
         /**
@@ -96,6 +91,11 @@ class CommandEditorView {
                 this.onsave(this.parentMode, this.idx, this.cmd);
             }
         });
+        this.reloadView();
+    }
+
+    reloadView() {
+        this.elm.innerHTML = template(this.cmd);
         this.elm.getElementsByClassName('messageEditor')[0].oninput = (evt) => {
             this.cmd.message = evt.target.value;
         };

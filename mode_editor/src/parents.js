@@ -13,18 +13,11 @@ var parentdata = {};
  */
 
 export async function remake_parentdata() {
-    let data = await import('./modeldata').then(mod => mod.getData());
-    make_parentdata(data);
-}
-
-/**
- * @param {import('vis-data/peer').DataSet<Mode, "name">} modeldata 
- */
-function make_parentdata(modeldata) {
+    const datamod = await import('./modeldata');
 
     /** @type string[] */
     var queue = [];
-    let root_node = modeldata.get("");
+    let root_node = await datamod.getRootMode();
     parentdata[""] = { level: 0 };
     let children = root_node.command
         .map(cmd => cmd.mode)
@@ -40,7 +33,7 @@ function make_parentdata(modeldata) {
     while (queue.length > 0) {
         let nxt = queue.pop();
         let cur_lvl = parentdata[nxt].level;
-        let children = modeldata.get(nxt).command
+        let children = (await datamod.getMode(nxt)).command
             .map(cmd => cmd.mode)
             .filter(nxt => nxt !== undefined);
         let relevant = children
