@@ -1,3 +1,4 @@
+<h2>All Modes</h2>
 <div class="modeListTable">
     {{#each data}}
     {{#if .}}
@@ -22,7 +23,7 @@
     <button {{#if disabled}} disabled="true" {{/if}} class="divButton finishButton {{ident}}">{{text}}</button>
     {{/each}}
     {{else}}
-    <button class="divButton finishButton addButton">Add</button>
+    <button class="divButton finishButton addButton">Add Mode</button>
     {{#if showCancel}}
     <button class="divButton finishButton cancelButton">Cancel</button>
     {{/if}}
