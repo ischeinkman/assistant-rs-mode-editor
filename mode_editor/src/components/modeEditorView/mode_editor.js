@@ -50,10 +50,7 @@ class ModeEditorView {
      * @param {Mode} md 
      */
     constructor(md) {
-        this.mode = {
-            name: md.name,
-            command: md.command.slice()
-        };
+        this.mode = md;
 
         /** @type {RenameCallback} */
         this.onrename = function () { return Promise.resolve({}); };
@@ -64,20 +61,28 @@ class ModeEditorView {
         /** @type {EditCommandCallback} */
         this.oneditcommand = async function (modename, idx, cmd) {
             const mod = await import('../commandEditorView/command_editor');
-            console.log('==== MODE EDITCOMMAND ====');
-            console.log(arguments);
             const prevSelf = this;
             let newview = mod.makeEditor(modename, idx, cmd);
-            let make_prev_view = async function () {
+            const prevsave = newview.onsave;
+            newview.onsave = async (parentMode, idx, cmd) => {
+                let changed = !cmdEqual(prevSelf.mode.command[idx], cmd);
+                if (changed) {
+                    await prevsave(parentMode, idx, cmd);
+                    prevSelf.reloadView();
+                    newview.elm.replaceWith(prevSelf.elm);
+                }
+            };
+            newview.oncancel = () => {
                 newview.elm.replaceWith(prevSelf.elm);
             };
-            const prevsave = newview.onsave;
-            newview.onsave = (parentMode, idx, cmd) => prevsave(parentMode, idx, cmd).then(() => make_prev_view());
-            newview.oncancel = make_prev_view;
             this.elm.replaceWith(newview.elm);
         };
         this.elm = document.createElement('div');
         this.elm.classList.add('modeEditorView');
+        this.reloadView();
+    }
+
+    reloadView() {
         this.elm.innerHTML = template(this.mode);
         if (this.mode.name) {
             this.elm.getElementsByClassName('renameButton')[0].onclick = () => this.onrename(this.mode);
@@ -91,4 +96,14 @@ class ModeEditorView {
             btn.onclick = () => this.oneditcommand(this.mode.name, jdx, cmd);
         }
     }
+}
+
+
+/**
+ * @param {Command} cmda 
+ * @param {Command} cmdb 
+ * @returns {boolean}
+ */
+function cmdEqual(cmda, cmdb) {
+    return cmda.mode === cmdb.mode && cmda.message === cmdb.message && cmda.command === cmdb.command;
 }
