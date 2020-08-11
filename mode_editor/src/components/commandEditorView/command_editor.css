@@ -93,22 +93,4 @@ therefore, it needs some extra custom stylings **/
   align-self: flex-end;
 }
 
-/** These are used by the Save/Cancel buttons and also the mode Edit button. **/
-.commandEditorView .divButton {
-  box-shadow: none;
-  text-shadow: none;
-  background-color: white;
-
-  border-style: solid;
-  border-color: black;
-  border-radius: 15px;
-
-  font-family: sans-serif;
-  font-weight: bold;
-
-  height: fit-content;
-}
-.commandEditorView .divButton:hover {
-  background-color: rgb(238, 235, 235);
-}
 

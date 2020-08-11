@@ -1,5 +1,6 @@
 import template from './command_editor.handlebars';
 import './command_editor.css';
+import '../divButton/divButton.css';
 
 /** 
  * @typedef {import('../../modeldata').Command} Command
@@ -83,7 +84,7 @@ class CommandEditorView {
             const mod = await import(/* webpackChunkName: "modeldata-commandeditor-2" */ '../../modeldata');
             let modenames = await mod.getModeNames();
             modenames.push('[END]');
-            const viewmod = await import(/* webpackChunkName: "modeview-commandeditor-1 */ "../modeListView/mode_list");
+            const viewmod = await import(/* webpackChunkName: "modeview-commandeditor-1" */ "../modeListView/mode_list");
             let nview = viewmod.makeList(modenames, true);
             const prevSelf = this;
             nview.onclick = (modename) => {

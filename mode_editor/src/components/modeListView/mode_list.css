@@ -32,26 +32,7 @@
 }
 
 .modeListView .divButton {
-  box-shadow: none;
-  text-shadow: none;
-  background-color: white;
-
-  border-style: solid;
-  border-color: black;
-  border-radius: 15px;
-
-  font-family: sans-serif;
-  font-weight: bold;
   font-size: 16px;
-
-  height: fit-content;
-}
-
-.modeListView .divButton:hover {
-  background-color: rgb(238, 235, 235);
-}
-.modeListView .divButton:disabled:hover {
-  background-color: white;
 }
 
 .modeListView .modeListEntry {

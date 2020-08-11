@@ -1,5 +1,6 @@
 import template from './mode_list.handlebars';
 import './mode_list.css';
+import '../divButton/divButton.css'
 
 
 export function makeList(data, showCancel) {

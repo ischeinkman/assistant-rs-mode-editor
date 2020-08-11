@@ -49,3 +49,14 @@ export async function parse_files(fls) {
     modes.push(rootmode);
     return modes;
 }
+
+export async function make_toml_data() {
+    const TOML = await import(/* webpackChunkName: "tomldep-loading-2" */ '@iarna/toml');
+    const datamod = await import(/*webpackChunkName: "modeldata-loading-1" */ './modeldata');
+    const rootmode = await datamod.getRootMode();
+    const command = rootmode.command; 
+    const modenames = await datamod.getModeNames();
+    const modepromise = modenames.filter(name => !!name).map(name => datamod.getMode(name));
+    const mode = await Promise.all(modepromise);
+    return TOML.stringify({command : command, mode : mode});
+}

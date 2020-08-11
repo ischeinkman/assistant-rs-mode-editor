@@ -1,5 +1,6 @@
 import template from './mode_editor.handlebars';
 import './mode_editor.css';
+import '../divButton/divButton.css'
 
 /**
  * @typedef {import('../../modeldata').Command} Command
