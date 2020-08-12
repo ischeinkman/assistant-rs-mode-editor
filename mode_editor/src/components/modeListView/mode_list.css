@@ -43,6 +43,8 @@
   justify-content: center;
   max-width: 80%;
   width: 400px;
+  align-self: flex-start;
+  margin-bottom: 20px;
 }
 
 .modeListView .divButton {
