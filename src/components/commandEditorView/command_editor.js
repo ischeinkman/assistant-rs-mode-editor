@@ -1,7 +1,6 @@
 import template from './command_editor.handlebars';
 import './command_editor.css';
 import '../divButton/divButton.css';
-import '../finishRow/finishRow.css';
 import '../viewWrapper/viewWrapper.css';
 
 /** 

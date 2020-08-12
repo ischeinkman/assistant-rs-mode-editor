@@ -1,7 +1,6 @@
 import template from './mode_editor.handlebars';
 import './mode_editor.css';
 import '../divButton/divButton.css';
-import '../finishRow/finishRow.css';
 import '../viewWrapper/viewWrapper.css';
 
 /**

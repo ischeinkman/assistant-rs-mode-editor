@@ -72,11 +72,11 @@
 </table>
 {{/ ../viewWrapper/content}}
 
-{{#> ../finishRow/finishRow}}
+{{#> ../viewWrapper/finishRow}}
 {{#if name}}
-{{> ../finishRow/finishButton ident="renameButton" text="Rename"}}
+{{> ../viewWrapper/finishButton ident="renameButton" text="Rename"}}
 {{else}}
-{{> ../finishRow/finishButton ident="renameButton" text="Rename" disabled="true"}}
+{{> ../viewWrapper/finishButton ident="renameButton" text="Rename" disabled="true"}}
 {{/if}}
-{{> ../finishRow/finishButton ident="cancelButton" text="Cancel"}}
-{{/ ../finishRow/finishRow}}
+{{> ../viewWrapper/finishButton ident="cancelButton" text="Cancel"}}
+{{/ ../viewWrapper/finishRow}}

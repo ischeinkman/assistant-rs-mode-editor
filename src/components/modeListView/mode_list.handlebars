@@ -20,12 +20,12 @@
 {{/ ../viewWrapper/content}}
 
 {{#if finishButtons}}
-    {{> ../finishRow/finishRow finishButtons}}
+    {{> ../viewWrapper/finishRow finishButtons}}
 {{else}}
-    {{#> ../finishRow/finishRow}}
-        {{> ../finishRow/finishButton ident="addButton" text="Add"}}
+    {{#> ../viewWrapper/finishRow}}
+        {{> ../viewWrapper/finishButton ident="addButton" text="Add"}}
         {{#if showCancel}}
-        {{> ../finishRow/finishButton ident="cancelButton" text="Cancel"}}
+        {{> ../viewWrapper/finishButton ident="cancelButton" text="Cancel"}}
         {{/if}}
-    {{/ ../finishRow/finishRow}}
+    {{/ ../viewWrapper/finishRow}}
 {{/if}}
