@@ -3,6 +3,12 @@ import './mode_list.css';
 import '../divButton/divButton.css';
 
 
+/**
+ * 
+ * @param {string[]} data 
+ * @param {any} options 
+ * @returns {ModeListView}
+ */
 export function makeList(data, options) {
     return new ModeListView(data, options);
 }
@@ -13,6 +19,11 @@ export function makeList(data, options) {
  *
  */
 
+/**
+ * @class ModeListView 
+ * @property elm {HTMLElement}
+ * @property modenames {string[]}
+ */
 class ModeListView {
 
     /**
@@ -60,8 +71,8 @@ class ModeListView {
         if (this.finishButtons && this.finishButtons.length > 0) {
             let finishElms = this.elm.getElementsByClassName('finishButton');
             for (var jdx = 0; jdx < this.finishButtons.length; jdx++) {
-                var curdata = this.finishButtons[jdx];
-                var curelm = finishElms[jdx];
+                const curdata = this.finishButtons[jdx];
+                const curelm = finishElms[jdx];
                 if (curelm.textContent !== curdata.text || !curelm.classList.contains(curdata.ident)) {
                     //TODO: this
                     console.log("FOUND ERROR!");
@@ -78,8 +89,6 @@ class ModeListView {
             const curElm = entryElms[idx];
             const vl = curElm.getAttribute('value');
             curElm.onclick = () => {
-                console.log('ENTRY CLICK: ');
-                console.log(vl);
                 self.onclick(vl);
             };
         }
