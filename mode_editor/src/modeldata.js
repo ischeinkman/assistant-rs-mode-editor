@@ -38,7 +38,10 @@ export async function loadData(newdata) {
             continue;
         }
         let prevmd = datastore.get(curmd.name);
-        if (prevmd && !modeEquals(curmd, prevmd)) {
+        if(!prevmd) {
+            curmd.command.sort(compareCommand);
+        }
+        else if (prevmd && !modeEquals(curmd, prevmd)) {
             return false;
         }
     }
@@ -61,6 +64,7 @@ export async function loadData(newdata) {
                 prevRoot.command.push(newCmd);
             }
         }
+        prevRoot.command.sort(compareCommand);
         datastore.updateOnly(prevRoot);
     }
     datastore.add(newdata);
@@ -161,6 +165,7 @@ export async function setCommand(parentMode, idx, cmd) {
     else {
         prevdata.command[idx] = cmd;
     }
+    prevdata.command.sort(compareCommand);
     let datastore = await getData();
     datastore.updateOnly(prevdata);
     datastore.flush();
@@ -199,6 +204,60 @@ export function commandEquals(cmda, cmdb) {
     return cmda.message === cmdb.message
         && cmda.command === cmdb.command
         && cmda.mode === cmdb.mode;
+}
+
+/**
+ * 
+ * @param {Command} cmda 
+ * @param {Command} cmdb 
+ * @returns {number}
+ */
+export function compareCommand(cmda, cmdb) {
+    if(commandEquals(cmda, cmdb)) {
+        return 0;
+    }
+    let a_is_root = !cmda.message || cmda.message.length === 0;
+    let b_is_root = !cmdb.message || cmdb.message.length === 0;
+
+    /* First is the default command */
+    if(a_is_root && !b_is_root) {
+        return -1;
+    }
+    if(!a_is_root && b_is_root) {
+        return 1;
+    }
+
+    /* Next all transition commands */
+    if(cmda.mode !== undefined && cmdb.mode === undefined) {
+        return -1;
+    }
+    if(cmdb.mode !== undefined && cmda.mode === undefined) {
+        return 1;
+    }
+
+    if(cmda.mode !== undefined && cmdb.mode !== undefined) {
+        if(cmda.mode < cmdb.mode) {
+            return -1;
+        }
+        if (cmdb.mode < cmda.mode) {
+            return 1;
+        }
+    }
+
+    if(cmda.command < cmdb.command) {
+        return -1;
+    }
+    if(cmdb.command < cmda.command) {
+        return 1;
+    }
+    if(cmda.message < cmdb.message) {
+        return -1;
+    }
+    if(cmdb.message < cmda.message) {
+        return 1;
+    }
+
+    return 0;
 }
 
 /**
