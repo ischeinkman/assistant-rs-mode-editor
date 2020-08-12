@@ -65,5 +65,5 @@
   ); /* 1 for the + symbol, 2 for ->, 0.5% for the padding, 20px for the bordering */
 }
 .modeEditorView .divButton {
-  font-size: 20px;
+  font-size: 1.3em;
 }
