@@ -29,14 +29,16 @@
   align-content: center;
 }
 
-.commandEditorView .fieldRow .fieldLabel {
+.commandEditorView .fieldLabel {
   text-align: center;
   justify-self: center;
   align-self: center;
   height: min-content;
+  font-family: sans-serif;
+  font-weight: bold;
 }
 
-.commandEditorView .fieldRow .fieldEditor {
+.commandEditorView .fieldEditor {
   align-self: center;
   align-items: right;
   justify-items: center;
@@ -45,7 +47,7 @@
   max-height: min-content;
 }
 
-.commandEditorView .fieldRow .fieldEditor input {
+.commandEditorView .fieldEditor input {
   width: 100%;
   font-size: 16px;
 }
@@ -62,12 +64,13 @@ therefore, it needs some extra custom stylings **/
   flex-direction: row;
 }
 
-.commandEditorView .modeEditor .modeLabel {
+.commandEditorView .modeLabel {
   flex-grow: 1;
   align-self: center;
+  font-family: sans-serif;
 }
 
-.commandEditorView .modeEditor .modeChangeButton {
+.commandEditorView .modeChangeButton {
   align-self: center;
   padding-left: 10px;
   padding-right: 10px;
