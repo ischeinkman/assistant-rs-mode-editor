@@ -1,4 +1,5 @@
-<h2>All Modes</h2>
+{{> ../viewWrapper/title title="All Modes" }}
+{{#> ../viewWrapper/content}}
 <div class="modeListTable">
     {{#each data}}
     {{#if .}}
@@ -16,6 +17,7 @@
     {{/if}}
     {{/each}}
 </div>
+{{/ ../viewWrapper/content}}
 
 {{#if finishButtons}}
     {{> ../finishRow/finishRow finishButtons}}

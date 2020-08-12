@@ -1,8 +1,10 @@
 {{#if name}}
-<h2 class="modeName">{{this.name}}</h2>
+{{> ../viewWrapper/title title=name }}
 {{else}}
-<h2 class="modeName"> [DEFAULT] </h2>
+{{> ../viewWrapper/title title="[DEFAULT]" }}
 {{/if}}
+
+{{#> ../viewWrapper/content}}
 <table class="commandList">
     <colgroup>
         <col class="commandCol messageCol">
@@ -68,13 +70,13 @@
         </tr>
     </tbody>
 </table>
-
+{{/ ../viewWrapper/content}}
 
 {{#> ../finishRow/finishRow}}
-    {{#if name}}
-        {{> ../finishRow/finishButton ident="renameButton" text="Rename"}}
-    {{else}}
-        {{> ../finishRow/finishButton ident="renameButton" text="Rename" disabled="true"}}
-    {{/if}}
-    {{> ../finishRow/finishButton ident="cancelButton" text="Cancel"}}
+{{#if name}}
+{{> ../finishRow/finishButton ident="renameButton" text="Rename"}}
+{{else}}
+{{> ../finishRow/finishButton ident="renameButton" text="Rename" disabled="true"}}
+{{/if}}
+{{> ../finishRow/finishButton ident="cancelButton" text="Cancel"}}
 {{/ ../finishRow/finishRow}}

@@ -1,3 +1,5 @@
+{{> ../viewWrapper/title title="" }}
+{{#> ../viewWrapper/content}}
 <div class="fieldRow messageRow">
     <div class="fieldLabel messageLabel">
         Message:
@@ -35,7 +37,9 @@
         </button>
     </div>
 </div>
+{{/ ../viewWrapper/content}}
+
 {{#> ../finishRow/finishRow}}
-    {{> ../finishRow/finishButton ident="saveButton" text="Save"}}
-    {{> ../finishRow/finishButton ident="cancelButton" text="Cancel"}}
+{{> ../finishRow/finishButton ident="saveButton" text="Save"}}
+{{> ../finishRow/finishButton ident="cancelButton" text="Cancel"}}
 {{/ ../finishRow/finishRow}}

@@ -2,6 +2,7 @@ import template from './mode_editor.handlebars';
 import './mode_editor.css';
 import '../divButton/divButton.css';
 import '../finishRow/finishRow.css';
+import '../viewWrapper/viewWrapper.css';
 
 /**
  * @typedef {import('../../modeldata').Command} Command
@@ -103,6 +104,7 @@ class ModeEditorView {
         };
         this.elm = document.createElement('div');
         this.elm.classList.add('modeEditorView');
+        this.elm.classList.add('viewWrapper');
         this.reloadView();
     }
 

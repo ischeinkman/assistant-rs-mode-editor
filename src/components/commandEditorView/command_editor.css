@@ -1,17 +1,6 @@
 /** Wrapper styling **/
 .commandEditorView {
-  display: flex;
-  flex-direction: column;
   justify-content: space-between;
-
-  border-radius: 15px;
-
-  background-color: white;
-
-  font-size: 16px;
-  color: black;
-
-  height: 100%;
 }
 
 /** Field table entries **/

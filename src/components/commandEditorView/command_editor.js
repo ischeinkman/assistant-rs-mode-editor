@@ -2,6 +2,7 @@ import template from './command_editor.handlebars';
 import './command_editor.css';
 import '../divButton/divButton.css';
 import '../finishRow/finishRow.css';
+import '../viewWrapper/viewWrapper.css';
 
 /** 
  * @typedef {import('../../modeldata').Command} Command
@@ -62,6 +63,7 @@ class CommandEditorView {
         this.cmd = commd;
         this.elm = document.createElement('div');
         this.elm.classList.add('commandEditorView');
+        this.elm.classList.add('viewWrapper');
 
         /**
          * @type {SaveCallback}

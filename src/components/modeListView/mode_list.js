@@ -2,6 +2,7 @@ import template from './mode_list.handlebars';
 import './mode_list.css';
 import '../divButton/divButton.css';
 import '../finishRow/finishRow.css';
+import '../viewWrapper/viewWrapper.css';
 
 /**
  * 
@@ -48,6 +49,7 @@ class ModeListView {
         this.modenames = dt;
         this.elm = document.createElement('div');
         this.elm.classList.add('modeListView');
+        this.elm.classList.add('viewWrapper');
 
         this.onclick = async (modename) => {
             const editorImport = await import(/* webpackChunkName: "modeeditor-modelist-1" */ '../modeEditorView/mode_editor');
