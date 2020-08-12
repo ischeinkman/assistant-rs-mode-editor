@@ -68,22 +68,27 @@
   width: 10%;
 }
 
-.modeEditorView .commandEditButton {
+.modeEditorView .commandEditButtonCell {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
 }
+.modeEditorView .commandDeleteButton {
+  margin-right: 5%;
+}
 
+/** Add command button **/
 .modeEditorView .commandAddButton {
     width : 100%;
-    display: table-cell;
+    display : flex;
+    flex-direction: row;
 }
 
-.modeEditorView .commandAddButton  button{
-  width : 100%;
+.modeEditorView .commandAddButton button{
+  width : calc(3em + 20px + 0.5%); /* 1 for the + symbol, 2 for ->, 0.5% for the padding, 20px for the bordering */
 }
 .modeEditorView .divButton {
-  font-size: 16px;
+  font-size: 20px;
 }
 
 /** Save/Cancel buttons **/

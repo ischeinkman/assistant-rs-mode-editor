@@ -52,15 +52,17 @@
             {{/if}}
             {{/if}}
 
-            <td class="commandEditButton">
-                <button class="divButton">Edit</button>
+            <td class="commandEditButtonCell">
+                <button class="divButton commandDeleteButton"> x </button>
+                <button class="divButton commandEditButton"> -> </button>
             </td>
         </tr>
         {{/each}}
-        <tr colspan="3" span="3" >
-            <td colspan="2"></td>
-            <td colspan="2" class="commandEditButton commandAddButton">
-                <button class="divButton">Add</button>
+        <tr>
+            <td colspan="4">
+                <div class="commandEditButtonCell commandAddButton">
+                    <button class="divButton">+</button>
+                </div>
             </td>
 
         </tr>

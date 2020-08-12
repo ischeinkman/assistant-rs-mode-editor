@@ -38,7 +38,7 @@ export async function loadData(newdata) {
             continue;
         }
         let prevmd = datastore.get(curmd.name);
-        if(!prevmd) {
+        if (!prevmd) {
             curmd.command.sort(compareCommand);
         }
         else if (prevmd && !modeEquals(curmd, prevmd)) {
@@ -76,7 +76,7 @@ export async function loadData(newdata) {
 async function getDataInner() {
     const vis = await import(/* webpackChunkName: "visdatadep-modeldata-1" */ 'vis-data/peer');
     let retvl = new vis.DataSet({ fieldId: "name", queue: true });
-    retvl.add({name : "", command : []});
+    retvl.add({ name: "", command: [] });
     retvl.flush();
     return retvl;
 }
@@ -172,6 +172,27 @@ export async function setCommand(parentMode, idx, cmd) {
     return true;
 }
 
+/**
+ * @param {string} parentMode 
+ * @param {number} idx 
+ * @param {Command} cmd 
+ * @returns {Promise<boolean>}
+ */
+export async function deleteCommand(parentMode, idx, cmd) {
+    let prevdata = await getMode(parentMode);
+    if (!prevdata || prevdata.command.length <= idx) {
+        return false;
+    }
+    if (cmd && !commandEquals(cmd, prevdata.command[idx])) {
+        return false;
+    }
+    prevdata.command.splice(idx, 1);
+    let datastore = await getData();
+    datastore.updateOnly(prevdata);
+    datastore.flush();
+    return true;
+}
+
 
 /**
  * @param {Command} cmd 
@@ -213,30 +234,30 @@ export function commandEquals(cmda, cmdb) {
  * @returns {number}
  */
 export function compareCommand(cmda, cmdb) {
-    if(commandEquals(cmda, cmdb)) {
+    if (commandEquals(cmda, cmdb)) {
         return 0;
     }
     let a_is_root = !cmda.message || cmda.message.length === 0;
     let b_is_root = !cmdb.message || cmdb.message.length === 0;
 
     /* First is the default command */
-    if(a_is_root && !b_is_root) {
+    if (a_is_root && !b_is_root) {
         return -1;
     }
-    if(!a_is_root && b_is_root) {
+    if (!a_is_root && b_is_root) {
         return 1;
     }
 
     /* Next all transition commands */
-    if(cmda.mode !== undefined && cmdb.mode === undefined) {
+    if (cmda.mode !== undefined && cmdb.mode === undefined) {
         return -1;
     }
-    if(cmdb.mode !== undefined && cmda.mode === undefined) {
+    if (cmdb.mode !== undefined && cmda.mode === undefined) {
         return 1;
     }
 
-    if(cmda.mode !== undefined && cmdb.mode !== undefined) {
-        if(cmda.mode < cmdb.mode) {
+    if (cmda.mode !== undefined && cmdb.mode !== undefined) {
+        if (cmda.mode < cmdb.mode) {
             return -1;
         }
         if (cmdb.mode < cmda.mode) {
@@ -244,16 +265,16 @@ export function compareCommand(cmda, cmdb) {
         }
     }
 
-    if(cmda.command < cmdb.command) {
+    if (cmda.command < cmdb.command) {
         return -1;
     }
-    if(cmdb.command < cmda.command) {
+    if (cmdb.command < cmda.command) {
         return 1;
     }
-    if(cmda.message < cmdb.message) {
+    if (cmda.message < cmdb.message) {
         return -1;
     }
-    if(cmdb.message < cmda.message) {
+    if (cmdb.message < cmda.message) {
         return 1;
     }
 

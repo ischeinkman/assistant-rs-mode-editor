@@ -1,6 +1,6 @@
 import template from './mode_editor.handlebars';
 import './mode_editor.css';
-import '../divButton/divButton.css'
+import '../divButton/divButton.css';
 
 /**
  * @typedef {import('../../modeldata').Command} Command
@@ -26,6 +26,15 @@ export function makeEditor(mode) {
  * @param {Command} cmd 
  * @returns {Promise<void>}
  */
+
+/**
+* @callback DeleteCommandCallback
+* @param {string} modename
+* @param {number} idx 
+* @param {Command} cmd 
+* @returns {Promise<void>}
+*/
+
 /**
  * @callback RenameCallback 
  * @param {Mode} mode
@@ -44,6 +53,7 @@ export function makeEditor(mode) {
  * @property onrename {RenameCallback}
  * @property oncancel {CancelCallback}
  * @property oneditcommand {EditCommandCallback}
+ * @property ondeletecommand {DeleteCommandCallback}
  */
 class ModeEditorView {
 
@@ -78,9 +88,18 @@ class ModeEditorView {
             this.elm.replaceWith(newview.elm);
         };
 
+        /** @type {DeleteCommandCallback} */
+        this.ondeletecommand = async function (modename, idx, cmd) {
+            const modedata = await import(/* webpackChunkName: 'modeldata-modeeditor-3' */ '../../modeldata');
+            if (await modedata.deleteCommand(modename, idx, cmd)) {
+                this.mode = await modedata.getMode(this.mode.name);
+                this.reloadView();
+            }
+        };
+
         this.onaddcommand = async function (modename, idx) {
-            await this.oneditcommand(modename, idx, {message : ""})
-        }
+            await this.oneditcommand(modename, idx, { message: "" });
+        };
         this.elm = document.createElement('div');
         this.elm.classList.add('modeEditorView');
         this.reloadView();
@@ -93,11 +112,15 @@ class ModeEditorView {
         }
         this.elm.getElementsByClassName('cancelButton')[0].onclick = () => this.oncancel(this.mode);
         var editButtons = this.elm.getElementsByClassName('commandEditButton');
+        var deleteButtons = this.elm.getElementsByClassName('commandDeleteButton');
         for (var idx = 0; idx < this.mode.command.length; idx++) {
             let jdx = idx | 0;
             let btn = editButtons[idx];
+            let delbtn = deleteButtons[idx];
             let cmd = this.mode.command[idx];
             btn.onclick = () => this.oneditcommand(this.mode.name, jdx, JSON.parse(JSON.stringify(cmd)));
+            delbtn.onclick = () => this.ondeletecommand(this.mode.name, jdx, JSON.parse(JSON.stringify(cmd)));
+
         }
         var addbutton = this.elm.getElementsByClassName('commandAddButton')[0];
         addbutton.onclick = () => this.onaddcommand(this.mode.name, this.mode.command.length);
