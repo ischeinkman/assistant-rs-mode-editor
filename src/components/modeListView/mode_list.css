@@ -35,16 +35,18 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
+  overflow-y:auto;
 }
 
 .modeListView .modeListEntryWrapper {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  max-width: 80%;
+  max-width: 100%;
   width: 400px;
   align-self: flex-start;
   margin-bottom: 20px;
+  flex-grow: 1;
 }
 
 .modeListView .divButton {
@@ -64,8 +66,7 @@
 /** Save/Cancel buttons **/
 .modeListView .finishRow {
   margin-bottom: 30px;
-
-  flex-grow: 2;
+  margin-top : 20px;
 
   display: flex;
   flex-direction: row;
@@ -76,5 +77,5 @@
 
 .modeListView .finishButton {
   font-size: 20px;
-  align-self: flex-end;
+  align-self: center;
 }

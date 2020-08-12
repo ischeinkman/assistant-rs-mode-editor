@@ -31,10 +31,10 @@ async function mymain() {
     const mode_list = await import(/* webpackChunkName: `modellist-index-1` */'./components/modeListView/mode_list');
     rootView = mode_list.makeList(modenames, {
         finishButtons: [
-            { ident: "addButton", text: "Add Mode", onclick: () => { console.log('TODO: add mode.'); } },
-            { ident: 'uploadButton', text: 'Upload File', onclick: uploadFile },
+            { ident: "addButton", text: "+", onclick: () => { console.log('TODO: add mode.'); } },
+            { ident: 'uploadButton', text: '\u21E1', onclick: uploadFile },
             {
-                ident: "downloadButton", text: "Download", onclick: () => {
+                ident: "downloadButton", text: "\u21E3", onclick: () => {
                     import(/* webpackChunkName: 'dataloading-index-2' */ './loading')
                         .then(mod => mod.save_toml());
                 }
