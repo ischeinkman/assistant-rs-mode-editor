@@ -1,0 +1,9 @@
+<div class="finishRow">
+    {{#if (@partial-block)}}
+    {{> @partial-block}}
+    {{else if length}}
+    {{#each .}}
+    {{> finishButton .}}
+    {{/each}}
+    {{/if}}
+</div>

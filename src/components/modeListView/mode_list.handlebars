@@ -17,15 +17,13 @@
     {{/each}}
 </div>
 
-<div class="finishRow">
-    {{#if finishButtons}}
-    {{#each finishButtons}}
-    <button {{#if disabled}} disabled="true" {{/if}} class="divButton finishButton {{ident}}">{{text}}</button>
-    {{/each}}
-    {{else}}
-    <button class="divButton finishButton addButton">Add</button>
-    {{#if showCancel}}
-    <button class="divButton finishButton cancelButton">Cancel</button>
-    {{/if}}
-    {{/if}}
-</div>
+{{#if finishButtons}}
+    {{> ../finishRow/finishRow finishButtons}}
+{{else}}
+    {{#> ../finishRow/finishRow}}
+        {{> ../finishRow/finishButton ident="addButton" text="Add"}}
+        {{#if showCancel}}
+        {{> ../finishRow/finishButton ident="cancelButton" text="Cancel"}}
+        {{/if}}
+    {{/ ../finishRow/finishRow}}
+{{/if}}

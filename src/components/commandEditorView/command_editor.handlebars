@@ -35,7 +35,7 @@
         </button>
     </div>
 </div>
-<div class="finishRow">
-    <button class="divButton finishButton saveButton">Save</button>
-    <button class="divButton finishButton cancelButton">Cancel</button>
-</div>
+{{#> ../finishRow/finishRow}}
+    {{> ../finishRow/finishButton ident="saveButton" text="Save"}}
+    {{> ../finishRow/finishButton ident="cancelButton" text="Cancel"}}
+{{/ ../finishRow/finishRow}}

@@ -1,6 +1,7 @@
 import template from './command_editor.handlebars';
 import './command_editor.css';
 import '../divButton/divButton.css';
+import '../finishRow/finishRow.css';
 
 /** 
  * @typedef {import('../../modeldata').Command} Command

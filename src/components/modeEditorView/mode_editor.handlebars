@@ -69,11 +69,12 @@
     </tbody>
 </table>
 
-<div class="finishRow">
+
+{{#> ../finishRow/finishRow}}
     {{#if name}}
-    <button class="divButton finishButton renameButton">Rename</button>
+        {{> ../finishRow/finishButton ident="renameButton" text="Rename"}}
     {{else}}
-    <button disabled="true" class="divButton finishButton renameButton">Rename</button>
+        {{> ../finishRow/finishButton ident="renameButton" text="Rename" disabled="true"}}
     {{/if}}
-    <button class="divButton finishButton cancelButton">Cancel</button>
-</div>
+    {{> ../finishRow/finishButton ident="cancelButton" text="Cancel"}}
+{{/ ../finishRow/finishRow}}
